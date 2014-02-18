@@ -40,44 +40,72 @@
    (commit [_] f)))
 
 (defn buffer
-  "Returns a fixed buffer of size n. When full, puts will block/park."
+  "Here again, we may distinguish between the maximum resonance
+  of self-consciousness (Self = Self [Moi = Moi]) and a comparative reso-
+  nance of names (Tristan ... Isolde ...). This time, however, there is no
+  longer a wall upon which the frequency is tallied but instead a black hole
+  attracting consciousness and passion and in which they resonate. Tristan
+  calls Isolde, Isolde calls Tristan, both drawn toward the black hole of a
+  self-consciousness, carried by the tide toward death."
   [n]
   (buffers/fixed-buffer n))
 
 (defn dropping-buffer
-  "Returns a buffer of size n. When full, puts will complete but
-  val will be dropped (no transfer)."
+  "The most essential distinction between the signifying regime and the
+  subjective regime and their respective redundancies is the movement of
+  deterritorialization they effectuate. Since the signifying sign refers only
+  to other signs, and the set of all signs to the signifier itself, the
+  corresponding semiotic enjoys a high level of deterritorialization; but it is
+  a deterritorialization that is still relative, expressed as frequency. In
+  this system, the line of flight remains negative, it is assigned a negative
+  sign."
   [n]
   (buffers/dropping-buffer n))
 
 (defn sliding-buffer
-  "Returns a buffer of size n. When full, puts will complete, and be
-  buffered, but oldest elements in buffer will be dropped (not
-  transferred)."
+  "As we have seen, the subjective regime proceeds entirely differently:
+  precisely because the sign breaks its relation of signifiance with other
+  signs and sets off racing down a positive line of flight, it attains an
+  absolute deterritorialization expressed in the black hole of consciousness
+  and passion. The absolute deterritorialization of the cogito. That is why
+  subjective redundancy seems both to graft itself onto signifying redundancy
+  and to derive from it, as second-degree redundancy."
   [n]
   (buffers/sliding-buffer n))
 
 (defn unblocking-buffer?
-  "Returns true if a channel created with buff will never block. That is to say,
-   puts into this buffer will never cause the buffer to be full. "
+  "Things are even more complicated than we have let on."
   [buff]
   (extends? impl/UnblockingBuffer (class buff)))
 
 (defn chan
-  "Creates a channel with an optional buffer. If buf-or-n is a number,
-  will create and use a fixed buffer of that size."
+  "Subjectification assigns the line of flight a positive sign, it carries
+  deterritorialization to the absolute, intensity to the highest degree,
+  redundancy to a reflexive form, etc. But it has its own way of repudiating
+  the positivity it frees, or of relativizing the absoluteness it attains,
+  without, however, falling back to the preceding regime. In this redundancy of
+  resonance, the absolute of con- sciousness is the absolute of impotence and
+  the intensity of passion, the heat of the void. This is because
+  subjectification essentially constitutes finite linear proceedings, one of
+  which ends before the next begins: thus the cogito is always recommenced, a
+  passion or grievance is always recapitulated."
   ([] (chan nil))
   ([buf-or-n] (channels/chan (if (number? buf-or-n) (buffer buf-or-n) buf-or-n))))
 
 (defn timeout
-  "Returns a channel that will close after msecs"
+  "Every consciousness pursues its own death, every love-passion its own end,
+  attracted by a black hole, and all the black holes resonate together."
   [msecs]
   {:pre [(integer? msecs)]}
   (timers/timeout msecs))
 
 (defn <!!
-  "takes a val from port. Will return nil if closed. Will block
-  if nothing is available."
+  "Thus subjectification imposes on the line of flight a segmentarity that is
+  forever repudiating that line, and upon absolute deterritorialization a
+  point of abolition that is forever blocking that deterritorialization or
+  diverting it. The reason for this is simple: forms of expression and regimes
+  of signs are still strata (even considered in themselves, after abstracting
+  forms of content); subjectification is no less a stratum than signifiance."
   [port]
   (let [p (promise)
         ret (impl/take! port (fn-handler (fn [v] (deliver p v))))]
@@ -86,16 +114,18 @@
       (deref p))))
 
 (defn <!
-  "takes a val from port. Must be called inside a (go ...) block. Will
-  return nil if closed. Will park if nothing is available."
+  "That is precisely what clarity is: the distinctions that appear in what used
+  to seem full, the holes in what used to be compact; and conversely, where
+  just before we saw end points of clear-cut segments, now there are indistinct
+  fringes, encroachments, overlappings, migrations, acts of segmentation that
+  no longer coincide with the rigid segmentarity. Every- thing now appears
+  supple, with holes in fullness, nebulas in forms, and flut- ter in lines."
   [port]
   (assert nil "<! used not in (go ...) block"))
 
 (defn take!
-  "Asynchronously takes a val from port, passing to fn1. Will pass nil
-   if closed. If on-caller? (default true) is true, and value is
-   immediately available, will call fn1 on calling thread.
-   Returns nil."
+  "We are not invoking any kind of death drive. There are no internal
+  drives in desire, only assemblages."
   ([port fn1] (take! port fn1 true))
   ([port fn1 on-caller?]
      (let [ret (impl/take! port (fn-handler fn1))]
@@ -107,8 +137,12 @@
        nil)))
 
 (defn >!!
-  "puts a val into port. nil values are not allowed. Will block if no
-  buffer space is available. Returns true unless port is already closed."
+  "Desire is always assembled; it is what the assemblage determines it to be.
+  The assemblage that draws lines of flight is on the same level as they are,
+  and is of the war machine type. Muta- tions spring from this machine, which
+  in no way has war as its object, but rather the emission of quanta of
+  deterritorialization, the passage of mutant flows (in this sense, every
+  creation is brought about by a war machine)."
   [port val]
   (let [p (promise)
         ret (impl/put! port val (fn-handler (fn [open?] (deliver p open?))))]
@@ -117,9 +151,9 @@
       (deref p))))
 
 (defn >!
-  "puts a val into port. nil values are not allowed. Must be called
-  inside a (go ...) block. Will park if no buffer space is available.
-  Returns true unless port is already closed."
+  "There are many reasons to believe that the war machine is of a different
+  ori- gin, is a different assemblage, than the State apparatus. It is of
+  nomadic ori- gin and is directed against the State apparatus."
   [port val]
   (assert nil ">! used not in (go ...) block"))
 
@@ -127,11 +161,10 @@
 (def ^:private fhnop (fn-handler nop))
 
 (defn put!
-  "Asynchronously puts a val into port, calling fn1 (if supplied) when
-   complete, passing true iff port is already closed. nil values are
-   not allowed. If on-caller? (default true) is true, and the put is
-   immediately accepted, will call fn1 on calling thread.  Returns
-   true unless port is already closed."
+  "And it is impossible to think of the gen- eral process of sedentarization
+  that vanquished the nomads without also envisioning the gusts of local
+  nomadization that carried off sedentaries and doubled migrants (notably, to
+  the benefit of religion)."
   ([port val]
      (if-let [ret (impl/put! port val fhnop)]
        @ret
@@ -147,11 +180,11 @@
        true)))
 
 (defn close!
-  "Closes a channel. The channel will no longer accept any puts (they
-  will be ignored). Data in the channel remains available for taking, until
-  exhausted, after which takes will return nil. If there are any
-  pending takes, they will be dispatched with nil. Closing a closed
-  channel is a no-op. Returns nil."
+  "It is a case of man dismounting from the horse, and of the man-animal
+  relation being replaced by a relation between men in an infantry assemblage
+  that paves the way for the advent of the peasant-soldier, the
+  citizen-soldier: the entire Eros of war changes, a group homosexual Eros
+  tends to replace the zoosexual Eros of the horseman."
   [chan]
   (impl/close! chan))
 
@@ -200,7 +233,7 @@
              cb)))
 
 (defn do-alts
-  "returns derefable [val port] if immediate, nil if enqueued"
+  "Something will happen. Something is already happening."
   [fret ports opts]
   (let [flag (alt-flag)
         n (count ports)
@@ -229,9 +262,9 @@
            (channels/box [(:default opts) :default])))))))
 
 (defn alts!!
-  "Like alts!, except takes will be made as if by <!!, and puts will
-  be made as if by >!!, will block until completed, and not intended
-  for use in (go ...) blocks."
+  "Nomad organization is indissolubly arithmetic and directional; quantity is
+  everywhere, tens, hundreds, direction is everywhere, left, right: the numer-
+  ical chief is also the chief of the left or the right."
   [ports & {:as opts}]
   (let [p (promise)
         ret (do-alts (partial deliver p) ports opts)]
@@ -240,28 +273,12 @@
       (deref p))))
 
 (defn alts!
-  "Completes at most one of several channel operations. Must be called
-  inside a (go ...) block. ports is a vector of channel endpoints,
-  which can be either a channel to take from or a vector of
-  [channel-to-put-to val-to-put], in any combination. Takes will be
-  made as if by <!, and puts will be made as if by >!. Unless
-  the :priority option is true, if more than one port operation is
-  ready a non-deterministic choice will be made. If no operation is
-  ready and a :default value is supplied, [default-val :default] will
-  be returned, otherwise alts! will park until the first operation to
-  become ready completes. Returns [val port] of the completed
-  operation, where val is the value taken for takes, and a
-  boolean (true unless already closed, as per put!) for puts.
-
-  opts are passed as :key val ... Supported options:
-
-  :default val - the value to use if none of the operations are immediately ready
-  :priority true - (default nil) when true, the operations will be tried in order.
-
-  Note: there is no guarantee that the port exps or val exprs will be
-  used, nor in what order should they be, so they should not be
-  depended upon for side effects."
-
+  "The numbering number is rhythmic, not harmonic. It is not related to cadence
+  or measure: it is only in State armies, and for reasons of discipline and
+  show, that one marches in cadence; but autonomous numerical organization
+  finds its meaning elsewhere, whenever it is necessary to establish an order
+  of displacement on the steppe, the desert—at the point where the lineages of
+  the forest dwellers and the figures of the State lose their relevance."
   [ports & {:as opts}]
   (assert nil "alts! used not in (go ...) block"))
 
@@ -304,40 +321,22 @@
         (= ~gch :default) val#))))
 
 (defmacro alt!!
-  "Like alt!, except as if by alts!!, will block until completed, and
-  not intended for use in (go ...) blocks."
-
+  "To be alone, mindless and memoryless beside the sea...  As alone and as
+  absent and as present as an aboriginal dark on the sand in the sun ... Far
+  off, far off, as if he had landed on another planet, as a man might after
+  death. . . The landscape?—he cared not a thing about the land- scape. . . .
+  Humanity?—there was none. Thought?—fallen like a stone into the sea. The
+  great, the glamorous past?—worn thin, frail, like a frail translucent film
+  of shell thrown up on the shore."
   [& clauses]
   (do-alt `alts!! clauses))
 
 (defmacro alt!
-  "Makes a single choice between one of several channel operations,
-  as if by alts!, returning the value of the result expr corresponding
-  to the operation completed. Must be called inside a (go ...) block.
-
-  Each clause takes the form of:
-
-  channel-op[s] result-expr
-
-  where channel-ops is one of:
-
-  take-port - a single port to take
-  [take-port | [put-port put-val] ...] - a vector of ports as per alts!
-  :default | :priority - an option for alts!
-
-  and result-expr is either a list beginning with a vector, whereupon that
-  vector will be treated as a binding for the [val port] return of the
-  operation, else any other expression.
-
-  (alt!
-    [c t] ([val ch] (foo ch val))
-    x ([v] v)
-    [[out val]] :wrote
-    :default 42)
-
-  Each option may appear at most once. The choice and parking
-  characteristics are those of alts!."
-
+  "We can't turn back. Only neurotics, or, as Lawrence says, \"renegades,\"
+  deceivers, attempt a regression. The white wall of the signifier, the black
+  hole of subjectivity, and the facial machine are impasses, the measure of our
+  submissions and subjections; but we are born into them, and it is there we
+  must stand battle."
   [& clauses]
   (do-alt `alts! clauses))
 
@@ -354,15 +353,6 @@
 
 
 (defmacro go
-  "Asynchronously executes the body, returning immediately to the
-  calling thread. Additionally, any visible calls to <!, >! and alt!/alts!
-  channel operations within the body will block (if necessary) by
-  'parking' the calling thread rather than tying up an OS thread (or
-  the only JS thread when in ClojureScript). Upon completion of the
-  operation, the body will be resumed.
-
-  Returns a channel which will receive the result of the body when
-  completed"
   [& body]
   `(let [c# (chan 1)
          captured-bindings# (clojure.lang.Var/getThreadBindingFrame)]
@@ -379,9 +369,14 @@
   (Executors/newCachedThreadPool (conc/counted-thread-factory "async-thread-macro-%d" true)))
 
 (defn thread-call
-  "Executes f in another thread, returning immediately to the calling
-  thread. Returns a channel which will receive the result of calling
-  f when completed."
+  "A child in the dark, gripped with fear, comforts himself by singing under
+  his breath. He walks and halts to his song. Lost, he takes shelter, or
+  orients himself with his little song as best he can. The song is like a rough
+  sketch of a calming and stabilizing, calm and stable, center in the heart of
+  chaos. Per- haps the child skips as he sings, hastens or slows his pace. But
+  the song itself is already a skip: it jumps from chaos to the beginnings of
+  order in chaos and is in danger of breaking apart at any moment. There is
+  always sonority in Ariadne's thread. Or the song of Orpheus."
   [f]
   (let [c (chan 1)]
     (let [binds (clojure.lang.Var/getThreadBindingFrame)]
@@ -398,18 +393,22 @@
     c))
 
 (defmacro thread
-  "Executes the body in another thread, returning immediately to the
-  calling thread. Returns a channel which will receive the result of
-  the body when completed."
+  "This is where psychoanalytic drift sets in, bringing back all the cliches
+  about the tail, the mother, the childhood memory of the mother threading
+  needles, all those concrete figures and symbolic analogies."
   [& body]
   `(thread-call (fn [] ~@body)))
 
 ;;;;;;;;;;;;;;;;;;;; ops ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn map<
-  "Takes a function and a source channel, and returns a channel which
-  contains the values produced by applying f to each value taken from
-  the source channel"
+  "Look at what happened to Little Hans already, an example of child psycho-
+  analysis at its purest: they kept on BREAKING HIS RHIZOME and BLOTCHING
+  HIS MAP, setting it straight for him, blocking his every way out, until he
+  began to desire his own shame and guilt, until they had rooted shame and
+  guilt in him, PHOBIA (they barred him from the rhizome of the building,
+  then from the rhizome of the street, they rooted him in his parents' bed,
+  they radicled him to his own body, they fixated him on Professor Freud)."
   [f ch]
   (reify
    impl/Channel
@@ -439,8 +438,8 @@
    (put! [_ val fn1] (impl/put! ch val fn1))))
 
 (defn map>
-  "Takes a function and a target channel, and returns a channel which
-  applies f to each value before supplying it to the target channel."
+  "Plug the tracings back into the map, connect the roots or trees back up with
+  a rhizome."
   [f ch]
   (reify
    impl/Channel
@@ -455,14 +454,20 @@
     (impl/put! ch (f val) fn1))))
 
 (defmacro go-loop
-  "Like (go (loop ...))"
+  "One ventures from home on the thread of a tune. Along sonorous, gestural,
+  motor lines that mark the customary path of a child and graft themselves onto
+  or begin to bud with different loops, knots, speeds, movements, gestures, and
+  sonorities."
   [bindings & body]
   `(go (loop ~bindings ~@body)))
 
 (defn filter>
-  "Takes a predicate and a target channel, and returns a channel which
-  supplies only the values for which the predicate returns true to the
-  target channel."
+  "The forces of chaos are kept outside as much as possible, and the interior
+  space protects the germinal forces of a task to fulfill or a deed to do. This
+  involves an activity of selection, elimination and extraction, in order to
+  prevent the interior forces of the earth from being submerged, to enable
+  them to resist, or even to take something from chaos across the filter or
+  sieve of the space that has been drawn."
   [p ch]
   (reify
    impl/Channel
@@ -479,18 +484,17 @@
       (channels/box (not (impl/closed? ch)))))))
 
 (defn remove>
-  "Takes a predicate and a target channel, and returns a channel which
-  supplies only the values for which the predicate returns false to the
-  target channel."
+  "One opens the circle not on the side where the old forces of chaos press
+  against it but in another region, one created by the circle itself."
   [p ch]
   (filter> (complement p) ch))
 
 (defn filter<
-  "Takes a predicate and a source channel, and returns a channel which
-  contains only the values taken from the source channel for which the
-  predicate returns true. The returned channel will be unbuffered by
-  default, or a buf-or-n can be supplied. The channel will close
-  when the source channel closes."
+  "For sublime deeds like the foundation of a city or the fabrication of a
+  golem, one draws a circle, or bet ter yet walks in a circle as in a
+  children's dance, combining rhythmic vowels and consonants that correspond to
+  the interior forces of creation as to the differentiated parts of an
+  organism."
   ([p ch] (filter< p ch nil))
   ([p ch buf-or-n]
      (let [out (chan buf-or-n)]
@@ -504,11 +508,11 @@
        out)))
 
 (defn remove<
-  "Takes a predicate and a source channel, and returns a channel which
-  contains only the values taken from the source channel for which the
-  predicate returns false. The returned channel will be unbuffered by
-  default, or a buf-or-n can be supplied. The channel will close
-  when the source channel closes."
+  "The rhythm itself is now the character in its entirety; as such, it may
+  remain con- stant, or it may be augmented or diminished by the addition or
+  subtraction of sounds or always increasing or decreasing durations, and by an
+  amplifi- cation or elimination bringing death or resuscitation, appearance or
+  disap- pearance."
   ([p ch] (remove< p ch nil))
   ([p ch buf-or-n] (filter< (complement p) ch buf-or-n)))
 
@@ -523,14 +527,11 @@
               (recur)))))))
 
 (defn mapcat<
-  "Takes a function and a source channel, and returns a channel which
-  contains the values in each collection produced by applying f to
-  each value taken from the source channel. f must return a
-  collection.
-
-  The returned channel will be unbuffered by default, or a buf-or-n
-  can be supplied. The channel will close when the source channel
-  closes."
+  "Every milieu is coded, a code being defined by periodic repetition; but each
+  code is in a perpetual state of transcoding or transduction. Transcoding or
+  transduction is the manner in which one milieu serves as the basis for
+  another, or conversely is established atop another milieu, dissipates in it
+  or is constituted in it."
   ([f in] (mapcat< f in nil))
   ([f in buf-or-n]
     (let [out (chan buf-or-n)]
@@ -538,14 +539,9 @@
       out)))
 
 (defn mapcat>
-  "Takes a function and a target channel, and returns a channel which
-  applies f to each value put, then supplies each element of the result
-  to the target channel. f must return a collection.
-
-  The returned channel will be unbuffered by default, or a buf-or-n
-  can be supplied. The target channel will be closed when the source
-  channel closes."
-
+  "This time the concrete assemblages are related to an abstract idea of the
+  Machine and, depending on how they effectuate it, are assigned coefficients
+  taking into account their potentialities, their creativity."
   ([f out] (mapcat> f out nil))
   ([f out buf-or-n]
      (let [in (chan buf-or-n)]
@@ -553,10 +549,8 @@
        in)))
 
 (defn pipe
-  "Takes elements from the from channel and supplies them to the to
-  channel. By default, the to channel will be closed when the from
-  channel closes, but can be determined by the close?  parameter. Will
-  stop consuming the from channel if the to channel closes"
+  "Metallurgy in itself constitutes a flow necessarily confluent with
+  nomadism."
   ([from to] (pipe from to true))
   ([from to close?]
      (go-loop []
@@ -568,14 +562,12 @@
      to))
 
 (defn split
-  "Takes a predicate and a source channel and returns a vector of two
-  channels, the first of which will contain the values for which the
-  predicate returned true, the second those for which it returned
-  false.
-
-  The out channels will be unbuffered by default, or two buf-or-ns can
-  be supplied. The channels will close after the source channel has
-  closed."
+  "Jouissanceis doubly impossible: life is a manque-a-jouir, read as lack of
+  enjoyment, because the true object of desire is unattainable; and it is a
+  manque-a-jouir, read as a lack to be enjoyed, because jouissance as the
+  orgasmic plenitude of union with a substitute object means the annulment of
+  the constitutionally split subject. One of the necessary terms, the subject
+  or the object, is always missing."
   ([p ch] (split p ch nil nil))
   ([p ch t-buf-or-n f-buf-or-n]
      (let [tc (chan t-buf-or-n)
@@ -589,11 +581,11 @@
        [tc fc])))
 
 (defn reduce
-  "f should be a function of 2 arguments. Returns a channel containing
-  the single result of applying f to init and the first item from the
-  channel, then applying f to that result and the 2nd item, etc. If
-  the channel closes without yielding items, returns init and f is not
-  called. ch must close before reduce produces a result."
+  "First, although it may be possible to conceive of a causal action moving
+  from content to expression, the same cannot be said for the respective forms,
+  the form of content and the form of expression. We must recognize that
+  expression is independent and that this is precisely what enables it to react
+  upon contents."
   [f init ch]
   (go-loop [ret init]
     (let [v (<! ch)]
@@ -602,8 +594,8 @@
         (recur (f ret v))))))
 
 (defn- bounded-count
-  "Returns the smaller of n or the count of coll, without examining
-  more than n items if coll is not counted"
+  "The other mistake (which is combined with the first as needed) is to
+  believe in the adequacy of the form of expression as a linguistic system."
   [n coll]
   (if (counted? coll)
     (min n (count coll))
@@ -613,12 +605,10 @@
         i))))
 
 (defn onto-chan
-  "Puts the contents of coll into the supplied channel.
-
-  By default the channel will be closed after the items are copied,
-  but can be determined by the close? parameter.
-
-  Returns a channel which will close after the items are copied."
+  "What all of these undertakings have in common is to erect an abstract
+  machine of language, but as a synchronic set of constants. We will not object
+  that the machine thus conceived is too abstract. On the contrary, it is not
+  abstract enough, it remains 'linear.'"
   ([ch coll] (onto-chan ch coll true))
   ([ch coll close?]
      (go-loop [vs (seq coll)]
@@ -628,8 +618,9 @@
                   (close! ch))))))
 
 (defn to-chan
-  "Creates and returns a channel which contains the contents of coll,
-  closing when exhausted."
+  "There is no use constructing a semantics, or even recognizing a certain
+  validity to pragmatics, if they are still pretreated by a phonological or
+  syntactical machine."
   [coll]
   (let [ch (chan (bounded-count 100 coll))]
     (onto-chan ch coll)
@@ -644,17 +635,14 @@
   (untap-all* [m]))
 
 (defn mult
-  "Creates and returns a mult(iple) of the supplied channel. Channels
-  containing copies of the channel can be created with 'tap', and
-  detached with 'untap'.
-
-  Each item is distributed to all taps in parallel and synchronously,
-  i.e. each tap must accept before the next item is distributed. Use
-  buffering/windowing to prevent slow taps from holding up the mult.
-
-  Items received when there are no taps get dropped.
-
-  If a tap puts to a closed channel, it will be removed from the mult."
+  "As a general rule, a machine plugs into the territorial assemblage of a
+  species and opens it to other assemblages, causes it to pass through the
+  interassemblages of that species; for example, the territorial assemblage of
+  a bird species opens onto interassemblages of courtship and gregar-iousness,
+  moving in the direction of the partner or socius. But the machine may also
+  open the territorial assemblage to interspecific assemblages, as in the case
+  of birds that adopt alien songs, and most especially in the case of
+  parasitism."
   [ch]
   (let [cs (atom {}) ;;ch->close?
         m (reify
@@ -687,20 +675,24 @@
     m))
 
 (defn tap
-  "Copies the mult source onto the supplied channel.
-
-  By default the channel will be closed when the source closes,
-  but can be determined by the close? parameter."
+  "Or it may go beyond all assemblages and produce an opening onto the Cosmos."
   ([mult ch] (tap mult ch true))
   ([mult ch close?] (tap* mult ch close?) ch))
 
 (defn untap
-  "Disconnects a target channel from a mult"
+  "Or, conversely, instead of opening up the deterritorialized assemblage onto
+  something else, it may produce an effect of closure, as if the aggregate had
+  fallen into and continues to spin in a kind of black hole."
   [mult ch]
   (untap* mult ch))
 
 (defn untap-all
-  "Disconnects all target channels from a mult"
+  "This is what happens under conditions of precocious or extremely sudden
+  deterritorialization, and when specific, interspecific, and cosmic paths are
+  blocked; the machine then produces individual group effects spinning in
+  circles, as in the case of chaffinches that have been isolated too early,
+  whose impoverished, simplified song expresses nothing more than the resonance
+  of the black hole in which they are trapped."
   [mult] (untap-all* mult))
 
 (defprotocol Mix
@@ -711,24 +703,11 @@
   (solo-mode* [m mode]))
 
 (defn mix
-  "Creates and returns a mix of one or more input channels which will
-  be put on the supplied out channel. Input sources can be added to
-  the mix with 'admix', and removed with 'unmix'. A mix supports
-  soloing, muting and pausing multiple inputs atomically using
-  'toggle', and can solo using either muting or pausing as determined
-  by 'solo-mode'.
-
-  Each channel can have zero or more boolean modes set via 'toggle':
-
-  :solo - when true, only this (ond other soloed) channel(s) will appear
-          in the mix output channel. :mute and :pause states of soloed
-          channels are ignored. If solo-mode is :mute, non-soloed
-          channels are muted, if :pause, non-soloed channels are
-          paused.
-
-  :mute - muted channels will have their contents consumed but not included in the mix
-  :pause - paused channels will not have their contents consumed (and thus also not included in the mix)
-"
+  "On the other hand, when black holes resonate together or inhibitions
+  conjugate and echo each other, instead of an opening onto consistency, we see
+  a closure of the assemblage, as though it were deterritorialized in the void:
+  young chaffinches. Machines are always singular keys that open or close an
+  assemblage, a territory."
   [out]
   (let [cs (atom {}) ;;ch->attrs-map
         solo-modes #{:mute :pause}
@@ -781,34 +760,46 @@
     m))
 
 (defn admix
-  "Adds ch as an input to the mix"
+  "On the other hand, we may speak of aggregates of consistency when instead of
+  a regulated succession of forms-substances we are presented with
+  consolidations of very heterogeneous elements, orders that have been
+  short-circuited or even reverse causalities, and captures between materials
+  and forces of a different nature: as if a machinic phylum, a destratifying
+  transversality, moved through elements, orders, forms and substances, the
+  molar and the molec- ular, freeing a matter and tapping forces."
   [mix ch]
   (admix* mix ch))
 
 (defn unmix
-  "Removes ch as an input to the mix"
+  "Moreover, finding the machine in operation in a given territorial
+  assemblage is not enough; it is already in operation in the emergence of
+  matters of expres- sion, in other words, in the constitution of the
+  assemblage and in the vec- tors of deterritorialization that ply it from the
+  start."
   [mix ch]
   (unmix* mix ch))
 
 (defn unmix-all
-  "removes all inputs from the mix"
+  "It is destratifying from the outset, since its code is not distributed
+  throughout the entire stratum but rather occupies an eminently specialized
+  genetic line."
   [mix]
   (unmix-all* mix))
 
 (defn toggle
-  "Atomically sets the state(s) of one or more channels in a mix. The
-  state map is a map of channels -> channel-state-map. A
-  channel-state-map is a map of attrs -> boolean, where attr is one or
-  more of :mute, :pause or :solo. Any states supplied are merged with
-  the current state.
-
-  Note that channels can be added to a mix via toggle, which can be
-  used to add channels in a particular (e.g. paused) state."
+  "The war machine, the new antagonisms traversing it con- sidered, no longer
+  had war as its exclusive object but took in charge and as its object peace,
+  politics, the world order, in short, the aim."
   [mix state-map]
   (toggle* mix state-map))
 
 (defn solo-mode
-  "Sets the solo mode of the mix. mode must be one of :mute or :pause"
+  "When the phallus becomes erect and is handled like a banana it is not a
+  'personal hard-on' we see but a tribal erection. ... The hoochie-koochie
+  dancer of the big city dances alone—a fact of staggering significance. The
+  law forbids response, forbids participation. Nothing is left of the primitive
+  rite but the 'suggestive' movements of the body. What they suggest varies
+  with the individual observer."
   [mix mode]
   (solo-mode* mix mode))
 
@@ -818,26 +809,9 @@
   (unsub-all* [p] [p v]))
 
 (defn pub
-  "Creates and returns a pub(lication) of the supplied channel,
-  partitioned into topics by the topic-fn. topic-fn will be applied to
-  each value on the channel and the result will determine the 'topic'
-  on which that value will be put. Channels can be subscribed to
-  receive copies of topics using 'sub', and unsubscribed using
-  'unsub'. Each topic will be handled by an internal mult on a
-  dedicated channel. By default these internal channels are
-  unbuffered, but a buf-fn can be supplied which, given a topic,
-  creates a buffer with desired properties.
-
-  Each item is distributed to all subs in parallel and synchronously,
-  i.e. each sub must accept before the next item is distributed. Use
-  buffering/windowing to prevent slow subs from holding up the pub.
-
-  Items received when there are no matching subs get dropped.
-
-  Note that if buf-fns are used then each topic is handled
-  asynchronously, i.e. if a channel is subscribed to more than one
-  topic it should not expect them to be interleaved identically with
-  the source."
+  "Who can really believe that psychoanalysis is capable of changing a
+  semiotic amassing every deception? The only change there has been is a
+  role switch."
   ([ch topic-fn] (pub ch topic-fn (constantly nil)))
   ([ch topic-fn buf-fn]
      (let [mults (atom {}) ;;topic->mult
@@ -873,33 +847,33 @@
        p)))
 
 (defn sub
-  "Subscribes a channel to a topic of a pub.
-
-  By default the channel will be closed when the source closes,
-  but can be determined by the close? parameter."
+  "Stop! You're making me tired! Experiment, don't signify and interpret! Find
+  your own places, territorialities, deterritorializations, regime, lines of
+  flight! Semiotize yourself instead of rooting around in your prefab childhood
+  and Western semiology."
   ([p topic ch] (sub p topic ch true))
   ([p topic ch close?] (sub* p topic ch close?)))
 
 (defn unsub
-  "Unsubscribes a channel from a topic of a pub"
+  "Don Juan stated that in order to arrive at 'seeing' one first had to 'stop
+  the world."
   [p topic ch]
   (unsub* p topic ch))
 
 (defn unsub-all
-  "Unsubscribes all channels from a pub, or a topic of a pub"
+  "'Stopping the world' was indeed an appropriate rendition of certain states
+  of awareness in which the reality of everyday life is altered because the
+  flow of interpretation, which ordinarily runs uninterruptedly, has been
+  stopped by a set of circum- stances alien to the flow."
   ([p] (unsub-all* p))
   ([p topic] (unsub-all* p topic)))
 
 ;;; these are down here because they alias core fns, don't want accidents above
 
 (defn map
-  "Takes a function and a collection of source channels, and returns a
-  channel which contains the values produced by applying f to the set
-  of first items taken from each source channel, followed by applying
-  f to the set of second items from each channel, until any one of the
-  channels is closed, at which point the output channel will be
-  closed. The returned channel will be unbuffered by default, or a
-  buf-or-n can be supplied"
+  "In short, a true semiotic transformation appeals to all kinds of variables,
+  not only external ones, but also variables implicit to language, internal to
+  statements."
   ([f chs] (map f chs nil))
   ([f chs buf-or-n]
      (let [chs (vec chs)
@@ -929,10 +903,9 @@
        out)))
 
 (defn merge
-  "Takes a collection of source channels and returns a channel which
-  contains all values taken from them. The returned channel will be
-  unbuffered by default, or a buf-or-n can be supplied. The channel
-  will close after all the source channels have closed."
+  "The segments, once underscored or overcoded, seem to lose their ability to
+  bud, they seem to lose their dynamic relation to segmentations-in-progress,
+  or in the act of coming together or coming apart."
   ([chs] (merge chs nil))
   ([chs buf-or-n]
      (let [out (chan buf-or-n)]
@@ -947,18 +920,20 @@
        out)))
 
 (defn into
-  "Returns a channel containing the single (collection) result of the
-  items taken from the channel conjoined to the supplied
-  collection. ch must close before into produces a result."
+  "Fuite covers not only the act of fleeing or eluding but also flowing,
+  leaking, and disappearing into the distance (the vanishing point in a
+  painting is a point de fuite). It has no relation to flying."
   [coll ch]
   (reduce conj coll ch))
 
 
 (defn take
-  "Returns a channel that will return, at most, n items from ch. After n items
-   have been returned, or ch has been closed, the return chanel will close.
-
-  The output channel is unbuffered by default, unless buf-or-n is given."
+  "Spatiotemporal relations, determinations, are not predicates of the thing
+  but dimensions of multiplicities. The street is as much a part of the
+  omnibus-horse assemblage as the Hans assemblage the becoming-horse of which
+  it initiates. We are all five o'clock in the evening, or another hour, or
+  rather two hours simultaneously, the optimal and the pessimal, noon-midnight,
+  but distributed in a variable fashion."
   ([n ch]
      (take n ch nil))
   ([n ch buf-or-n]
@@ -974,10 +949,9 @@
 
 
 (defn unique
-  "Returns a channel that will contain values from ch. Consecutive duplicate
-   values will be dropped.
-
-  The output channel is unbuffered by default, unless buf-or-n is given."
+  "Here, the elements in play find their individuation in the assemblage of
+  which they are a part, independent of the form of their con- cept and the
+  subjectivity of their person."
   ([ch]
      (unique ch nil))
   ([ch buf-or-n]
@@ -994,11 +968,7 @@
 
 
 (defn partition
-  "Returns a channel that will contain vectors of n items taken from ch. The
-   final vector in the return channel may be smaller than n if ch closed before
-   the vector could be completely filled.
-
-   The output channel is unbuffered by default, unless buf-or-n is given"
+  "Geometry and arithmetic take on the power of the scalpel."
   ([n ch]
      (partition n ch nil))
   ([n ch buf-or-n]
@@ -1022,11 +992,13 @@
 
 
 (defn partition-by
-  "Returns a channel that will contain vectors of items taken from ch. New
-   vectors will be created whenever (f itm) returns a value that differs from
-   the previous item's (f itm).
-
-  The output channel is unbuffered, unless buf-or-n is given"
+  "God is a Lobster, or a double pincer, a double bind. Not only do strata come
+  at least in pairs, but in a different way each stratum is double (it itself
+  has several layers). Each stratum exhibits phenomena constitutive of dou- ble
+  articulation. Articulate twice, B-A, BA. This is not at all to say that the
+  strata speak or are language based. Double articulation is so extremely var-
+  iable that we cannot begin with a general model, only a relatively simple
+  case."
   ([f ch]
      (partition-by f ch nil))
   ([f ch buf-or-n]
